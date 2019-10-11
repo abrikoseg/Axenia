@@ -32,6 +32,10 @@ if ($paid['status'] == 'paid') {
             'chat_id' => $log_chat_id,
             'text' => "💰 For " . $donate . " 🍪 user " . $payer . " pay " . $amount . " RUB. User's balance is " . $balance
         ]);
+        $telegram->sendMessage([
+            'chat_id' => $payer,
+            'text' => "Спасибо за поддержку. С меня " .  $donate . " 🍪."
+        ]);
         $redis->hSet('cookies', $payer, $balance);
         $redis->hDel('bills', $bill_id . "_u");
         $redis->hDel('bills', $bill_id . "_n");

@@ -481,6 +481,7 @@ class BotService
         $newLevel = number_format($toLevel + ($isRise ? $fromLevelSqrt : -$fromLevelSqrt),1, '.', '');
 
         $userTo = $this->getUserName($to);
+        
 
 
         $res = $this->db->setUserLevel($to, $chat_id, $newLevel);
