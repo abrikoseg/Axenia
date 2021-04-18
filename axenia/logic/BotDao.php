@@ -26,7 +26,7 @@ class BotDao extends AbstractDao
             VALUES ($user_id,$username,$firstname,$lastname, now()) 
             ON DUPLICATE KEY UPDATE username=$username, firstname=$firstname, lastname=$lastname, last_updated=now()
         ";
-
+        
         return $this->insert($query);
     }
 
@@ -400,7 +400,7 @@ class BotDao extends AbstractDao
             WHERE user_id=" . $from_id . " AND chat_id=" . $chat_id
         );
 
-        return ($res[0] == null) ? false : $res[0];
+        return (count($res) == 0 || $res[0] == null) ? false : $res[0];
     }
 
     public function SumKarma($user_id)
@@ -558,7 +558,7 @@ class BotDao extends AbstractDao
         return (!$res[0]) ? 0 : $res[0];
     }
 
-
+    
 //endregion
 }
 

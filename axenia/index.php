@@ -1,5 +1,5 @@
 <?php
-require_once('../configs/format/config.php');
+require_once('../configs/axenia/config.php');
 
 require_once('core/util.php');
 require_once('core/AbstractDao.php');
@@ -11,8 +11,8 @@ require_once('logic/BotDao.php');
 require_once('logic/BotService.php');
 require_once('logic/BotRedis.php');
 require_once('logic/Axenia.php');
-require_once('logic/ShortUrl.php');
 
+ini_set('always_populate_raw_post_data','-1');
 $content = file_get_contents('php://input');
 $update = json_decode($content, true);
 
@@ -52,6 +52,7 @@ if (!$update) {
         $redis->close();
 
     } catch (Exception $e) {
-        redis_error($e);
+        //redis_error($e);
+        handle($update);
     }
 }

@@ -9,7 +9,7 @@ class Lang
     public static function availableLangs()
     {
         if (!isset(self::$availableLangs)) {
-            self::$availableLangs = ["en" => '🇬🇧 English', "ru" => '🇷🇺 Русский', "ua" => '🇺🇦 Українська', "ruUN" => '🔞 Русский (матерный)', "uz" => "🇺🇿 O'zbek"];
+            self::$availableLangs = ["en" => '🇬🇧 English', "ru" => '🇷🇺 Русский', "ua" => '🇺🇦 Українська', "ruUN" => '🔞 Русский (матерный)', "uz" => "🇺🇿 O'zbek", "tr" => "🇹🇷 Türkçe"];
         }
 
         return self::$availableLangs;
@@ -17,7 +17,7 @@ class Lang
 
     public static function defaultLangKey()
     {
-        return "ru";
+        return "en";
     }
 
     public static function getCurrentLangDesc()
@@ -29,7 +29,7 @@ class Lang
      * Обязательно должен вызваться
      * @param string $lang 'ru' or 'en' or etc.
      */
-    public static function init($lang = "ru")
+    public static function init($lang = "en")
     {
         self::availableLangs();
         self::loadMessages($lang);

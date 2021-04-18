@@ -5,7 +5,6 @@ require_once('Telegram.php');
  * Page for payment. Used for Qiwi
  */
 $paid = $_REQUEST;
-
 $bot_id = BOT_TOKEN;
 $log_chat_id = LOG_CHAT_ID;
 
@@ -31,6 +30,10 @@ if ($paid['status'] == 'paid') {
         $telegram->sendMessage([
             'chat_id' => $log_chat_id,
             'text' => "💰 For " . $donate . " 🍪 user " . $payer . " pay " . $amount . " RUB. User's balance is " . $balance
+        ]);
+        $telegram->sendMessage([
+            'chat_id' => $payer,
+            'text' => "Спасибо за поддержку. С меня " .  $donate . " 🍪."
         ]);
         $redis->hSet('cookies', $payer, $balance);
         $redis->hDel('bills', $bill_id . "_u");

@@ -481,7 +481,7 @@ class BotService
         $newLevel = round($toLevel + ($isRise ? $fromLevelSqrt : -$fromLevelSqrt), 2);
 
         $userTo = $this->getUserName($to);
-
+        
 
         $res = $this->db->setUserLevel($to, $chat_id, $newLevel);
         if ($res) {
@@ -610,12 +610,27 @@ class BotService
 
 // region -------------------- Donate
     public function showDonateMenu($from_id){
-        $button_list=[];
-        foreach($this->getDonateButtons() as $a){
-            array_push($button_list, ['text' => Lang::message('donate.price', ['k' => $a['nominal'], 'r' => $a['price']]), 'callback_data' => 'donate_'.$a['id']]);
-        }
-        $text=Lang::message("donate.title");
-        Request::sendHtmlMessage($from_id, $text, ["reply_markup" => ['inline_keyboard' => array_chunk($button_list,2)]]);
+        $text = "https://oplata.qiwi.com/create";
+        $txn_id = substr(md5(rand(1, 99999999) . Date('dmYhhmmss') . $chat_id), -10, 10);
+        $params = [
+            "publicKey" => QIWI_PUBLIC_KEY,
+            "billId" => $txn_id,
+            "comment" => "Поддержка Аксиньи",
+            "successurl" => 'http://axeniabot.ru/QiwiPaid.php'
+        ];
+        $url = $text . "?" . http_build_query($params);
+
+        Request::sendHtmlMessage(
+            $from_id, 
+            Lang::message("donate.title"), 
+            ["reply_markup" => [
+                'inline_keyboard' => 
+                    [
+                        [["text" => Lang::message("donate.pay"), "url" => $url]],
+                    ]
+                ]
+            ]
+        );
     }
 
     public function getDonateButtons()

@@ -11,7 +11,6 @@ class Util
     public static function isInEnum($enumString, $value)
     {
         $enumArray = explode(',', $enumString);
-
         return in_array($value, $enumArray);
     }
 
